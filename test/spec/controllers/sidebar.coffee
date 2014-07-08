@@ -1,17 +1,17 @@
 'use strict'
 
-describe 'Controller: AboutCtrl', ->
+describe 'Controller: SidebarCtrl', ->
 
   # load the controller's module
   beforeEach module 'pfdbApp'
 
-  AboutCtrl = {}
+  SidebarCtrl = {}
   scope = {}
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
-    AboutCtrl = $controller 'AboutCtrl', {
+    SidebarCtrl = $controller 'SidebarCtrl', {
       $scope: scope
     }
 

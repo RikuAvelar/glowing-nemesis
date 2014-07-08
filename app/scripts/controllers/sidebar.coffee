@@ -2,13 +2,13 @@
 
 ###*
  # @ngdoc function
- # @name pfdbApp.controller:AboutCtrl
+ # @name pfdbApp.controller:SidebarCtrl
  # @description
- # # AboutCtrl
+ # # SidebarCtrl
  # Controller of the pfdbApp
 ###
 angular.module('pfdbApp')
-  .controller 'AboutCtrl', ($scope) ->
+  .controller 'SidebarCtrl', ($scope) ->
     $scope.awesomeThings = [
       'HTML5 Boilerplate'
       'AngularJS'
