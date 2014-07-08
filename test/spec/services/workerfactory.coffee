@@ -19,6 +19,7 @@ describe 'Service: WorkerFactory', ->
       postMessage: ->
         listener {state: 'progress', data: {}}
         listener {state: 'complete', data: true}
+      terminate: jasmine.createSpy 'terminate'
 
     inject (_WorkerFactory_, _$timeout_, _$rootScope_) ->
       WorkerFactory = _WorkerFactory_
@@ -29,13 +30,34 @@ describe 'Service: WorkerFactory', ->
     window.Worker = SavedWorker
 
   it 'should return a promise when run', ->
+    # arrange
     Worker = new WorkerFactory "scriptName.js"
     callback = jasmine.createSpy "callback"
+    
+    # act
     promise = Worker.run()
       .then callback
 
     $rootScope.$apply()
 
+    # assert
     expect callback
       .toHaveBeenCalledWith true
 
+  it 'should automatically terminate unresponsive workers after 5 minutes'
+    # arrange
+    ResponsiveWorker = new Worker 'responsive'
+    UnresponsiveWorker = new Worker 'unresponsive'
+
+    jasmine.stub UnresponsiveWorker, 'postMessage'
+
+    # act
+    ResponsiveWorker.run()
+    UnresponsiveWorker.run()
+    $timeout.flush()
+
+    # assert
+    expect ResponsiveWorker.terminate
+      .not.toHaveBeenCalled()
+    expect UnresponsiveWorker.terminate
+      .toHaveBeenCalled()
