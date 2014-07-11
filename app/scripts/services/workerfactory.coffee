@@ -10,12 +10,16 @@
 angular.module('pfdbApp')
   .factory 'WorkerFactory', ($q, $timeout) ->
 
+    BASE_PATH = '../workers/'
+
     class PromisingWorker
-      constructor: (@script) ->
+      constructor: (@scriptName, isAbsoluteUrl = false) ->
+        this.scriptPath = if isAbsoluteUrl then @scriptName else BASE_PATH + @scriptName
 
       # Create a new worker, andd return a promise that it will finish
       run: (post) ->
         deferred = $q.defer()
+        script = if @isAbsoluteUrl then @scriptName else '../workers' + @scriptName
         worker = new Worker @script
   
         terminator = -> 

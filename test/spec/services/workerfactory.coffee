@@ -44,6 +44,20 @@ describe 'Service: WorkerFactory', ->
     expect callback
       .toHaveBeenCalledWith true
 
+  it 'should be able to receive either a full path, or a worker name'
+    # arrange
+    localWorker = new Worker 'script'
+    externalWorker = new Worker '/externalWorkers/script', true
+
+    #act
+
+    #assert
+
+    expect localWorker.scriptPath
+      .toBe '../workers/script'
+    expect externalWorker.scriptPath
+      .toBe '/externalWorkers/script'
+
   it 'should automatically terminate unresponsive workers after 5 minutes'
     # arrange
     ResponsiveWorker = new Worker 'responsive'
