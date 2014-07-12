@@ -33,7 +33,7 @@ describe 'Service: WorkerFactory', ->
     # arrange
     Worker = new WorkerFactory "scriptName.js"
     callback = jasmine.createSpy "callback"
-    
+
     # act
     promise = Worker.run()
       .then callback
@@ -44,7 +44,7 @@ describe 'Service: WorkerFactory', ->
     expect callback
       .toHaveBeenCalledWith true
 
-  it 'should be able to receive either a full path, or a worker name'
+  it 'should be able to receive either a full path, or a worker name', ->
     # arrange
     localWorker = new Worker 'script'
     externalWorker = new Worker '/externalWorkers/script', true
@@ -54,11 +54,11 @@ describe 'Service: WorkerFactory', ->
     #assert
 
     expect localWorker.scriptPath
-      .toBe '../workers/script'
+      .toBe "#{localWorker.BASE_PATH}/script"
     expect externalWorker.scriptPath
       .toBe '/externalWorkers/script'
 
-  it 'should automatically terminate unresponsive workers after 5 minutes'
+  it 'should automatically terminate unresponsive workers after 5 minutes', ->
     # arrange
     ResponsiveWorker = new Worker 'responsive'
     UnresponsiveWorker = new Worker 'unresponsive'
