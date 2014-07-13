@@ -8,7 +8,7 @@
  # Controller of the pfdbApp
 ###
 angular.module('pfdbApp')
-  .controller 'MainCtrl', ($scope) ->
+  .controller 'MainCtrl', ($scope, WorkerFactory) ->
     $scope.awesomeThings = [
       'HTML5 Boilerplate'
       'AngularJS'

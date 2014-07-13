@@ -14,7 +14,8 @@
     "angular-touch": "1.2.16",
     "angular-route": "1.2.16",
     "taffydb": "*",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "q": "https://github.com/kriskowal/q.git#v1.0.1"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

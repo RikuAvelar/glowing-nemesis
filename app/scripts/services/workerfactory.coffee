@@ -20,8 +20,7 @@ angular.module('pfdbApp')
       # Create a new worker, andd return a promise that it will finish
       run: (post) ->
         deferred = $q.defer()
-        script = if @isAbsoluteUrl then @scriptName else @BASE_PATH + @scriptName
-        worker = new Worker @script
+        worker = new Worker @scriptPath
 
         terminator = ->
           # after 5 minutes, force terminate the worker
@@ -31,13 +30,18 @@ angular.module('pfdbApp')
 
         workerTimeout = terminator()
 
-        worker.addEventListener "message", (result) ->
-          if result.state is 'complete'
-            deferred.resolve result.data
-          else
-            $timeout.cancel(workerTimeout)
-            workerTimeout = terminator
-            deferred.notify result.data
+        worker.addEventListener "message", (oEvent) =>
+          result = oEvent.data
+          switch result.status
+            when 'complete' then deferred.resolve result.data
+            when 'progress'
+              $timeout.cancel(workerTimeout)
+              workerTimeout = terminator
+              deferred.notify result.data
+            when 'failed'
+              $timeout.cancel(workerTimeout)
+              deferred.reject result.data
+            else console.log "#{@scriptName} returned state #{result.state} : #{JSON.stringify result.data}"
 
         worker.postMessage post
         deferred.promise
