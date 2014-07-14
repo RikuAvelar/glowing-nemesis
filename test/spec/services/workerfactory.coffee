@@ -31,7 +31,7 @@ describe 'Service: WorkerFactory', ->
 
   it 'should return a promise when run', ->
     # arrange
-    Worker = new WorkerFactory "scriptName.js"
+    Worker = new WorkerFactory "scriptName"
     callback = jasmine.createSpy "callback"
 
     # act

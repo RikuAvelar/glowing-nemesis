@@ -15,7 +15,7 @@ angular.module('pfdbApp')
     class PromisingWorker
       constructor: (@scriptName, isAbsoluteUrl = false) ->
         @BASE_PATH = BASE_PATH
-        this.scriptPath = if isAbsoluteUrl then @scriptName else BASE_PATH + @scriptName
+        this.scriptPath = if isAbsoluteUrl then @scriptName else BASE_PATH + @scriptName + '.js'
 
       # Create a new worker, andd return a promise that it will finish
       run: (post) ->
